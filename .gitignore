@@ -1,0 +1,45 @@
+# Python
+___pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+
+# Env
+.env
+
+# Data / Delta
+data/
+*.parquet
+*.delta/
+delta-lake/
+
+# Spark
+
+spark-warehouse/
+metastore_db/
+derby.log
+
+# dbt
+transform/target/
+transform/dbt_packages/
+transform/logs/
+
+# Airflow
+airflow/logs/
+airflow/.airflow/
+
+# Docker
+*.pid
+
+# OS
+.DS_Store
+Thumds.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
