@@ -45,3 +45,9 @@ In this project I will build and operate a **real-time lakehouse** with:
 ## License
 
 MIT
+
+## Screenshots
+
+### Airflow UI
+
+![Airflow UI](docs/airflow-ui.png)
