@@ -49,10 +49,11 @@ services:
       - kafka-data:/var/lib/kafka/data
     mem_limit: 1g
     healthcheck:
-      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server kafka:9092 || exit 1"]
-      interval: 15s
-      timeout: 10s
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9092 || exit 1"]
+      interval: 30s
+      timeout: 20s
       retries: 5
+      start_period: 30s
 
   # ---------- Postgres (Airflow metadata) ----------
   postgres:
