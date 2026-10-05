@@ -51,3 +51,7 @@ In this project I will build and operate a **real-time lakehouse** with:
 ### Airflow DAG — successful run
 
 ![Airflow DAG run](docs/airflow-dag-green.png)
+
+### Databricks mart table
+
+![Databricks mart](docs/databricks-mart.png)
