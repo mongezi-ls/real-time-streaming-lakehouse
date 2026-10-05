@@ -42,12 +42,12 @@ In this project I will build and operate a **real-time lakehouse** with:
 └── .github/workflows/ # CI/CD
 ```
 
-## License
-
-MIT
-
 ## Screenshots
 
 ### Airflow UI
 
 ![Airflow UI](docs/airflow-ui.png)
+
+### Airflow DAG — successful run
+
+![Airflow DAG run](docs/airflow-dag-green.png)
