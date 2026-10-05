@@ -1,7 +1,10 @@
 """
 Unit tests for the Silver layer's pure logic.
-Tests schema definitions and simple data transformations.
+
+Validates the schema contract and simple data transformations without
+importing PySpark (which is heavy and unnecessary for these checks).
 """
+import re
 import sys
 from pathlib import Path
 
@@ -11,35 +14,54 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "streaming"))
 
 
 class TestTradeSchema:
-    """Validates the schema used to parse Kraken trade events."""
+    """
+    Validates the Kraken trade schema field list.
 
-    def test_trade_schema_has_expected_fields(self):
-        # Recreate the schema locally to avoid Spark import
-        from pyspark.sql.types import (
-            DoubleType,
-            LongType,
-            StringType,
-            StructField,
-            StructType,
-        )
+    Rather than importing pyspark (heavy, not needed for pure schema
+    validation), we assert against the expected field names and types,
+    and cross-check that bronze_stream.py actually declares them.
+    """
 
-        trade_schema = StructType([
-            StructField("symbol", StringType()),
-            StructField("price", DoubleType()),
-            StructField("qty", DoubleType()),
-            StructField("ord_type", StringType()),
-            StructField("side", StringType()),
-            StructField("trade_id", LongType()),
-            StructField("timestamp", StringType()),
-        ])
+    EXPECTED_FIELDS = {
+        "symbol": "string",
+        "price": "double",
+        "qty": "double",
+        "ord_type": "string",
+        "side": "string",
+        "trade_id": "long",
+        "timestamp": "string",
+    }
 
-        field_names = [f.name for f in trade_schema.fields]
-        assert "trade_id" in field_names
-        assert "symbol" in field_names
-        assert "price" in field_names
-        assert "qty" in field_names
-        assert "side" in field_names
-        assert len(field_names) == 7
+    def test_expected_field_count(self):
+        assert len(self.EXPECTED_FIELDS) == 7
+
+    def test_expected_field_names(self):
+        assert set(self.EXPECTED_FIELDS.keys()) == {
+            "symbol",
+            "price",
+            "qty",
+            "ord_type",
+            "side",
+            "trade_id",
+            "timestamp",
+        }
+
+    def test_expected_field_types(self):
+        assert self.EXPECTED_FIELDS["trade_id"] == "long"
+        assert self.EXPECTED_FIELDS["price"] == "double"
+        assert self.EXPECTED_FIELDS["qty"] == "double"
+        assert self.EXPECTED_FIELDS["symbol"] == "string"
+
+    def test_bronze_stream_declares_all_expected_fields(self):
+        """Read bronze_stream.py and confirm each expected field is declared."""
+        bronze_path = Path(__file__).parent.parent / "streaming" / "bronze_stream.py"
+        source = bronze_path.read_text(encoding="utf-8")
+
+        for field in self.EXPECTED_FIELDS:
+            pattern = rf'StructField\(\s*"{field}"'
+            assert re.search(pattern, source), (
+                f"Field '{field}' is not declared in bronze_stream.py"
+            )
 
 
 class TestNotionalCalculation:
