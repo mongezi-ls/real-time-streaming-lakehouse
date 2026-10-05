@@ -1,0 +1,6 @@
+confluent-kafka==2.4.0
+databricks-sdk==0.17.0
+requests==2.32.3
+python-dotenv==1.0.1
+dbt-core==1.7.0
+dbt-databricks==1.7.0

@@ -6,12 +6,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 USER airflow
 
-# Python deps for Airflow DAGs (producer, kafka, delta, etc.)
-RUN pip install --no-cache-dir \
-    confluent-kafka==2.4.0 \
-    kafka-python==2.0.2 \
-    psycopg2-binary==2.9.9 \
-    delta-spark==3.1.0 \
-    pyspark==3.5.1 \
-    dbt-core==1.7.0 \
-    dbt-postgres==1.7.0
+COPY requirements.txt /requirements.txt
+RUN pip install --no-cache-dir -r /requirements.txt
+
+# So DAGs can read project env vars
+ENV PYTHONUNBUFFERED=1

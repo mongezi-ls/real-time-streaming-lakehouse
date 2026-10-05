@@ -15,9 +15,14 @@ x-airflow-common: &airflow-common
     AIRFLOW__CORE__PARALLELISM: '4'
     AIRFLOW__CORE__MAX_ACTIVE_TASKS_PER_DAG: '2'
     KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    DBT_DATABRICKS_TOKEN: "${DBT_DATABRICKS_TOKEN}"
+    DATABRICKS_HOST: "https://dbc-d5cf33b9-b470.cloud.databricks.com"
+    PROJECT_ROOT: "/opt/airflow/project"
   volumes:
     - ../orchestration:/opt/airflow/dags
     - airflow-logs:/opt/airflow/logs
+    - ../:/opt/airflow/project
+    - C:/Users/Mongezi/.dbt:/home/airflow/.dbt:ro
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     postgres:
@@ -49,7 +54,7 @@ services:
       - kafka-data:/var/lib/kafka/data
     mem_limit: 1g
     healthcheck:
-      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9092 || exit 1"]
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server kafka:9092 || exit 1"]
       interval: 30s
       timeout: 20s
       retries: 5
@@ -105,6 +110,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+      start_period: 180s
     restart: unless-stopped
 
   # ---------- Airflow scheduler ----------
