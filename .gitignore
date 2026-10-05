@@ -1,5 +1,5 @@
 # Python
-___pycache__/
+__pycache__/
 *.py[cod]
 *.egg-info/
 .venv/
@@ -18,15 +18,14 @@ data/
 delta-lake/
 
 # Spark
-
 spark-warehouse/
 metastore_db/
 derby.log
 
 # dbt
-transform/target/
-transform/dbt_packages/
-transform/logs/
+transform/kraken_analytics/target/
+transform/kraken_analytics/dbt_packages/
+transform/kraken_analytics/logs/
 
 # Airflow
 airflow/logs/
@@ -37,7 +36,7 @@ airflow/.airflow/
 
 # OS
 .DS_Store
-Thumds.db
+Thumbs.db
 
 # IDE
 .idea/
