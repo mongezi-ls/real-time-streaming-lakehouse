@@ -40,7 +40,7 @@ jobs:
       - name: Install test dependencies
         run: |
           pip install --upgrade pip
-          pip install pytest==8.2.0 pyyaml==6.0.1
+          pip install pytest==8.2.0 pyyaml==6.0.1 confluent-kafka==2.4.0 websockets==12.0 python-dotenv==1.0.1
 
       - name: Run tests
         run: pytest tests/ -v
@@ -60,25 +60,11 @@ jobs:
       - name: Install dbt
         run: |
           pip install --upgrade pip
-          pip install dbt-core==1.7.0 dbt-databricks==1.7.0
+          pip install dbt-core==1.7.0 dbt-databricks==1.7.0 databricks-sdk==0.17.0 protobuf==4.25.3
 
       - name: dbt parse
         working-directory: transform/kraken_analytics
         env:
-          DBT_DATABRICKS_TOKEN: "dummy-not-used-for-parse"
-        run: |
-          mkdir -p ~/.dbt
-          cat > ~/.dbt/profiles.yml <<EOF
-          kraken_analytics:
-            target: dev
-            outputs:
-              dev:
-                type: databricks
-                host: "dummy.cloud.databricks.com"
-                http_path: "/sql/1.0/warehouses/dummy"
-                token: "dummy"
-                catalog: workspace
-                schema: default
-                threads: 1
-          EOF
-          dbt parse
+          DBT_PROFILES_DIR: ${{ github.workspace }}/ci
+          DBT_DATABRICKS_TOKEN: "dummy"
+        run: dbt parse

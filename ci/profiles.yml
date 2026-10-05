@@ -1,0 +1,11 @@
+kraken_analytics:
+  target: ci
+  outputs:
+    ci:
+      type: databricks
+      host: "dummy.cloud.databricks.com"
+      http_path: "/sql/1.0/warehouses/dummy"
+      token: "dummy"
+      catalog: workspace
+      schema: default
+      threads: 1
