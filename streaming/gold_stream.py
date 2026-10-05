@@ -21,9 +21,10 @@ from pyspark.sql.functions import (
     current_timestamp,
     date_trunc,
     lit,
-    sum as spark_sum,
     when,
-    window,
+)
+from pyspark.sql.functions import (
+    sum as spark_sum,
 )
 from pyspark.sql.types import DoubleType
 

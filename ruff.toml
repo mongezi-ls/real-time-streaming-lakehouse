@@ -1,0 +1,31 @@
+# Ruff configuration
+# https://docs.astral.sh/ruff/
+
+line-length = 100
+target-version = "py311"
+
+exclude = [
+    ".venv",
+    "data",
+    "transform/kraken_analytics/target",
+    "transform/kraken_analytics/dbt_packages",
+]
+
+[lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "W",   # pycodestyle warnings
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line too long — let the formatter handle it
+    "B008",  # function call in default arg (needed for airflow/DAG patterns)
+]
+
+[lint.per-file-ignores]
+"tests/*" = ["E402"]   # allow imports after sys.path.insert
+"streaming/*" = ["E402"]
+"ingestion/*" = ["E402"]

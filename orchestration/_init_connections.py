@@ -3,6 +3,7 @@ Idempotently create Airflow connections + variables used by DAGs.
 Run this inside the Airflow container once after startup.
 """
 import os
+
 from airflow import settings
 from airflow.models import Connection, Variable
 

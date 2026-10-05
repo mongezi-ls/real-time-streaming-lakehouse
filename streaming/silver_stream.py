@@ -26,8 +26,6 @@ from pyspark.sql.types import (
     DoubleType,
     LongType,
     StringType,
-    StructField,
-    StructType,
     TimestampType,
 )
 

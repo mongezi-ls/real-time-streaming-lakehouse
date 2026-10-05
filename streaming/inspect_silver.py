@@ -1,5 +1,6 @@
 """Inspect the Silver Delta table."""
 import os
+
 from delta import configure_spark_with_delta_pip
 from delta.tables import DeltaTable
 from dotenv import load_dotenv

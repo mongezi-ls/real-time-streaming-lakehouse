@@ -55,3 +55,8 @@ In this project I will build and operate a **real-time lakehouse** with:
 ### Databricks mart table
 
 ![Databricks mart](docs/databricks-mart.png)
+
+
+# Real-Time Streaming Lakehouse
+
+[![CI](https://github.com/mongezi-ls/real-time-streaming-lakehouse/actions/workflows/ci.yml/badge.svg)](https://github.com/mongezi-ls/real-time-streaming-lakehouse/actions/workflows/ci.yml)

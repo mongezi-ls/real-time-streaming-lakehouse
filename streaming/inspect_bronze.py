@@ -2,6 +2,7 @@
 Quick inspection of the Bronze Delta table.
 """
 import os
+
 from delta import configure_spark_with_delta_pip
 from dotenv import load_dotenv
 from pyspark.sql import SparkSession

@@ -10,6 +10,7 @@ Press Ctrl+C to stop.
 import json
 import os
 import sys
+
 from confluent_kafka import Consumer, KafkaError
 from dotenv import load_dotenv
 
