@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_silver_trades
+    description: "Staging view over the Silver Delta table (Volume path)"
+    columns:
+      - name: trade_id
+        tests:
+          - unique
+          - not_null
+      - name: symbol
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['BTC/USD', 'ETH/USD', 'SOL/USD']
+      - name: side
+        tests:
+          - accepted_values:
+              values: ['buy', 'sell']
+
+  - name: stg_gold_symbol_metrics
+    columns:
+      - name: symbol
+        tests:
+          - unique
+          - not_null
+
+  - name: mart_symbol_summary
+    columns:
+      - name: symbol
+        tests:
+          - unique
+          - not_null
